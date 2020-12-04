@@ -32,7 +32,7 @@
 
         $query = "INSERT INTO PurchaseOrder (customer_id, item, order_amt, discount, sales_id, comm_amt, is_approved, secret_note) values ('$item', '$price', '$discount', '$notes', '$approval')";
 
-        if ($conn->query($query)) {
+        if ($db->query($query)) {
             echo "Your Purchase Number is: " . mysqli_insert_id();
         }
         else {
@@ -50,7 +50,7 @@
 
         $query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId;
 
-        $result = $conn->query($query);
+        $result = $db->query($query);
         if (mysql_num_rows($result) > 0)
             {
             Print "<table border>";
