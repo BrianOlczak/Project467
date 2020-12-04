@@ -18,7 +18,7 @@ function db_connect_hopper() {
 }
 
 function db_close($identifier) {
-    return mysqli_close($identifier);
+    return $db->close();
 }
 
 
