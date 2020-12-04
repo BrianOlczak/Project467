@@ -1,6 +1,3 @@
-// Brian Olczak
-// Group 8B
-
 <?php
 
     include 'Connections.php';
@@ -33,13 +30,13 @@
         $query = "INSERT INTO PurchaseOrder (customer_id, item, order_amt, discount, sales_id, comm_amt, is_approved, secret_note) values ('$item', '$price', '$discount', '$notes', '$approval')";
 
         if ($db->query($query)) {
-            echo "Your Purchase Number is: " . mysqli_insert_id();
+            echo "Your Purchase Number is: ".mysqli_insert_id();
         }
         else {
-            echo "Error:" . mysqli_error($connection);
+            echo "Error:".mysqli_error($connection);
         }
 
-        db_close($connection);
+        mysqli_close($connection);
     }
 
     function getOrders($salesId) {
@@ -48,7 +45,7 @@
             return null;
         }
 
-        $query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId;
+$query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId;        
 
         $result = $db->query($query);
         if (mysql_num_rows($result) > 0)
