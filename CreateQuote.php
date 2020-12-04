@@ -22,6 +22,7 @@
     <body bgcolor="#f8f8ff">
         
         <?php
+        include 'Connections.php';
         include 'Functions.php';
         include 'Session.php';
         //session_start();
@@ -108,7 +109,7 @@
             elseif(mysqli_connect_errno()) {
                 echo "Connection error:". mysqli_connect_error();
             }
-           db_close($customerConnection);
+           //db_close($customerConnection);
         }
         ?>
     </body>
