@@ -109,7 +109,7 @@
             elseif(mysqli_connect_errno()) {
                 echo "Connection error:". mysqli_connect_error();
             }
-           db2_close($customerConnection);
+           mysqli_close($customerConnection);
         }
         ?>
     </body>
