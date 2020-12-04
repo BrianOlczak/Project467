@@ -29,14 +29,14 @@ function db_connect_blitz() {
 	$user = "student";
 	$password = "student";
 
-	$db = mysqli_connect($server, $user, $password, $database, $port);
+	$db2 = mysqli_connect($server, $user, $password, $database, $port);
 
-	if($db->connect_error)
+	if($db2->connect_error)
 	{
 		die("Connection to database failed: " . $db->connect_error);
     }
 
-    return $db;
+    return $db2;
 }
 
 ?>
