@@ -25,6 +25,8 @@
     <body bgcolor="#f8f8ff">
         
         <?php
+        include 'Functions.php';
+        include 'Session.php';
         session_start();
         newQuote();
         $order = array(
