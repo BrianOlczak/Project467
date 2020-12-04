@@ -27,7 +27,7 @@
         <?php
         include 'Functions.php';
         include 'Session.php';
-        session_start();
+        //session_start();
         newQuote();
         $order = array(
             'customerID'    =>  $_POST['CustomerID'],
