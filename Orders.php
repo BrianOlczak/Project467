@@ -83,7 +83,7 @@
                         include 'Connections.php';
                         include 'Functions.php';
 
-                        $User_Name = 1;   // TODO: get this id from session
+                        $salesId = 1;   // TODO: get this id from session
                         getOrders($salesId);
                     ?>
 
