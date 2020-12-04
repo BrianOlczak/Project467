@@ -1,9 +1,6 @@
 //Brian Olczak
 // Group 8B
 
-
-
-
 <!DOCTYPE HTML>
 <html>
     <head>
