@@ -1,6 +1,3 @@
-//Brian Olczak
-// Group 8B
-
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -28,12 +25,12 @@
         //session_start();
         newQuote();
         $order = array(
-            'customerID'    =>  $_POST['CustomerID'],
-            'item'          =>  $_POST['Item'],
-            'price'         =>  $_POST['OrderAmount'],
-            'discount'      =>  $_POST['Discount'],
+            'customerID'    =>  $_POST['customer_id'],
+            'item'          =>  $_POST['item'],
+            'price'         =>  $_POST['order_amt'],
+            'discount'      =>  $_POST['discount'],
             'salesId'       =>  1,      // TODO: fetch this sales_associate id from session
-            'notes'         =>  $_POST['Secret_Note']
+            'notes'         =>  $_POST['secret_note']
         );
         createNewOrder($order);
 
