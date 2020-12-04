@@ -25,12 +25,12 @@
         //session_start();
         newQuote();
         $order = array(
-            'customerID'    =>  $_POST['customer_id'],
-            'item'          =>  $_POST['item'],
-            'price'         =>  $_POST['order_amt'],
-            'discount'      =>  $_POST['discount'],
+            'customerID'    =>  $_POST['CustomerID'],
+            'item'          =>  $_POST['Item'],
+            'price'         =>  $_POST['OrderAmt'],
+            'discount'      =>  $_POST['Discount'],
             'salesId'       =>  1,      // TODO: fetch this sales_associate id from session
-            'notes'         =>  $_POST['secret_note']
+            'notes'         =>  $_POST['Secret_note']
         );
         createNewOrder($order);
 
