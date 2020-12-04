@@ -9,7 +9,6 @@
     <head>
         <title>Customer Quote</title>
         <h1>Customer Quote</h1>
-        <a href="CreateQuoteGUI.php"></a>
         <style>
             div {       //TODO change this
                 border: 1px solid black;
@@ -19,6 +18,23 @@
             }
         </style>
     </head>
+    
+    <form method="get" action="CreateQuote.php">
+        <button type="submit">Create Quote</button>
+       </form>
+      <form method="get" action="Customer_List.php">
+        <button type="submit">Customer List</button>
+      </form>
+      <form method="get" action="Orders.php">
+        <button type="submit">Orders</button>
+      </form>
+      <form method="get" action="AdminHome.php">
+        <button type="submit">Admin Interface</button>
+      </form>
+      <form method="get" action="Logout.php">
+        <button type="submit">Sign Out</button>
+      </form>
+    
     <body bgcolor="#f8f8ff">
         
         <?php
