@@ -3,7 +3,7 @@
 
 <?php
 
-    require_once 'Connections.php';
+    include 'Connections.php';
 
     function createNewOrder($orderArr) {
         if (!$connection = db_connect_hopper()) {
