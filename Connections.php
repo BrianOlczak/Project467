@@ -39,4 +39,8 @@ function db_connect_blitz() {
     return $db2;
 }
 
+function db2_close($identifier) {
+    return $db2->close();
+}
+
 ?>
