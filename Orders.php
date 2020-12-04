@@ -63,6 +63,8 @@
 
         </style>
     </head>
+     <form method="get" action="Welcome.php">
+        <button type="submit">Home</button>
     <body>
 
         <div class="header">
