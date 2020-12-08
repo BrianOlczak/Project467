@@ -2,8 +2,21 @@
 
     include 'Connections.php';
 
+    function newQuote() {
+        if (!$db = db_connect_blitz()) {
+            echo "Connection Error: " .mysqli_error($db);
+            return null;
+        }
+            
+        $customerSQL = "Select * from customers;";
+        $customerResult = mysqli_query($db, $customerSQL);
+
+        return $customerResult;
+    }
+
     function createNewOrder($orderArr) {
-        if (!$connection = db_connect_hopper()) {
+        
+        if (!$db = db_connect_hopper()) {
             echo "Error: Unable to connect to the database.";
             return;
         }
@@ -20,35 +33,35 @@
         
 
         // TODO: Admin feature
-        $isApproved = FALSE;
+        $isApproved = 0;
         // if ($orderArr[4] == "on") {
-        //     $approval = 1;
+        //     $isApproved = 1;
         // }
         
         $notes = $orderArr['notes'];
 
-        $query = "INSERT INTO PurchaseOrder (customer_id, item, order_amt, discount, sales_id, comm_amt, is_approved, secret_note) values ('$item', '$price', '$discount', '$notes', '$approval')";
+        $query = "INSERT INTO PurchaseOrder (customer_id, item, order_amt, discount, sales_id, comm_amt, is_approved, secret_note) values ($customerID, '$item', $price, $discount, $salesId, $commAmt, $isApproved, '$notes')";
 
         if ($db->query($query)) {
-            echo "Your Purchase Number is: ".mysqli_insert_id();
+            echo "Your Purchase Number is: ".mysqli_insert_id($db);
         }
         else {
-            echo "Error:".mysqli_error($connection);
+            echo "Error:".mysqli_error($db);
         }
 
-        mysqli_close($connection);
+        mysqli_close($db);
     }
 
     function getOrders($salesId) {
-        if (!$connection = db_connect_hopper()) {
+        if (!$db = db_connect_hopper()) {
             echo "Error: Unable to connect to the database.";
             return null;
         }
 
-$query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId;        
+        $query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId;        
 
         $result = $db->query($query);
-        if (mysql_num_rows($result) > 0)
+        if (mysqli_num_rows($result) > 0)
             {
             Print "<table border>";
             Print "<tr>";
@@ -66,7 +79,7 @@ $query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId;
             }
             Print "</table>";
         } else {
-            Print "0 records found";
+            echo "\n0 records found";
         }
     }
 

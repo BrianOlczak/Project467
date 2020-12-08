@@ -1,11 +1,17 @@
 <?php
 
 function db_connect_hopper() {
-	$server = "courses";
-	$port = "3306";
+	// $server = "hopper.cs.niu.edu";
+	// $user = "z1808886";
+	// $password = "1995Sep20";
+
+	// For Local Testing
+	$server = "localhost";
+	$user = "root";
+	$password = "";
+
 	$database = "z1808886";
-	$user = "z1808886";
-	$password = "1995Sep20";
+	$port = "3306";
 
 	$db = mysqli_connect($server, $user, $password, $database, $port);
 
@@ -18,7 +24,7 @@ function db_connect_hopper() {
 }
 
 function db_close($identifier) {
-    return $db->close();
+    return $identifier->close();
 }
 
 

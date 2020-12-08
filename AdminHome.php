@@ -1,6 +1,6 @@
 <div class="header">
-            <h2>Administrator Homepage</h2>
-        </div>
+    <h2>Administrator Homepage</h2>
+</div>
 
   <!-- Menu toggle -->
     <a href="#menu" id="menuLink" class="menu-link">
@@ -12,7 +12,7 @@
             <ul class="pure-menu-list">
 		<li class="pure-menu-item"><a href="AssociateMenu.php" class="pure-menu-link">Manage Associates</a></li>
                 <li class="pure-menu-item"><a href="QuotesMenu.php" class="pure-menu-link">Manage Quotes</a></li>
-                <li class="pure-menu-item"><a href="http://students.cs.niu.edu/~z1771638/Welcome.php" class="pure-menu-link">Welcome</a></li>
+                <li class="pure-menu-item"><a href="Welcome.php" class="pure-menu-link">Welcome</a></li>
             </ul>
         </div>
     </div>

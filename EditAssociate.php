@@ -1,54 +1,67 @@
 <div class="header">
-            <h2>Edit Associates Information</h2>
-        </div>
- <?php
+        <h2>Edit Associates Information</h2>
+</div>
+
+<?php
 include 'HomeButton.html';
 
-$host = "courses";
-$user = "z1808886";
-$password = "1995Sep20";
-$db = "z1808886";
-$conn = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+require 'Connections.php';
+//connect to the Database
+$conn = db_connect_hopper();
+
+$conn->set_charset("utf8");
 
 //Our select statement. This will retrieve the data that we want.
-$sql = "SELECT Name FROM Sales_Associate";
+$sql = "SELECT sales_id, name FROM SalesAssociate";
 
 echo '<form action="EditAssociate.php" method="post">';
 echo "<tr><th> Choose an Associate to Edit </th></tr><br>";
 echo '<SELECT name="sa">';
 foreach($conn->query($sql) as $row)
 {
-   echo '<option value ="';
-   echo $row ["Name"];
-   echo '">';
-   echo $row ["Name"];
-   echo '</option>';
+    echo '<option value ="';
+    echo $row['sales_id'];
+    echo '">';
+    echo $row['name'];
+    echo '</option>';
 
 }
-echo '</select>';
+echo '</select><br><br>';
 
-echo '<br><br>Commission: <br>';
-echo '<input type="percent" name="CommissionAmt" id="CommissionAmt"<br>';
+echo 'Address: <br>';
+echo '<input type="address" name="address" id="address"><br><br>';
 
-echo '<br>Address: <br>';
-echo '<input type="address" name="Address" id="Address"<br>';
+echo 'Commission: <br>';
+echo '<input type="percent" name="commissionPercent" id="commissionPercent"><br><br>';
 
-echo '<br>User Name: <br>';
-echo '<input type="text" name="User_Name" id="User_Name"<br>';
+echo 'User Name: <br>';
+echo '<input type="text" name="username" id="username"><br><br>';
 
-echo '<br>Password: <br>';
-echo '<input type="password" name="Password" id="Password"<br>';
+echo 'Password: <br>';
+echo '<input type="password" name="password" id="password"><br><br>';
 
-echo '<br><br><input type="submit" name="sa" value="Add"><br>';
+echo '<input type="submit" value="Update"><br>';
 echo '</form>';
 
 if(isset($_POST['sa']))
 {
-	$sa = ($_POST['sa']); echo $sa;
-	$stmt = $conn->query("DELETE FROM Sales_Associate (CommissionAmt, Address, User_Name, Password) WHERE Name = '$sa'");
-	$stmt = $conn->query("INSERT INTO Sales_Associate (CommissionAmt, Address, User_Name, Password) VALUES('$_POST[CommissionAmt]','$_POST[Address]','$_POST[User_Name]','$_POST[Password]') WHERE Name = '$sa'");
- 	echo "Database updated!";
+    $sa = (int)$_POST['sa'];
+
+    
+
+    if (empty($_POST['address']) || empty($_POST['commissionPercent']) || 
+                empty($_POST['username']) || empty($_POST['password'])) {
+        echo "Error: All Fields are necessary";
+    } else {
+        
+        $query = 'UPDATE SalesAssociate SET address = "' . $_POST['address'] . '", comm_per = "' .  $_POST['commissionPercent'] . '", username = "' . $_POST['username'] . '", password = "' . $_POST['password'] . '" WHERE sales_id = ' . $sa;
+
+        $stmt = $conn->query($query);
+
+        echo "Database updated!";
+    }
 }
 
+db_close($conn);
 
 ?>

@@ -1,43 +1,45 @@
 <div class="header">
-            <h2>Add New Associate </h2>
-        </div>
+    <h2>Add New Associate </h2>
+</div>
 
 <?php
 include 'HomeButton.html';
 
-$host = "courses";
-$user = "z1808886";
-$password = "1995Sep20";
-$db = "z1808886";
+require 'Connections.php';
+//connect to the Database
+$conn = db_connect_hopper();
 
-$conn = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+$conn->set_charset("utf8");
 
 echo '<form action="AddAssociate.php" method="post">';
 
-echo 'Enter Associates Information<br>';
+echo '<h4>Enter Associates Information</h4>';
 
-echo '<br>Name: <br>';
-echo '<input type="text" name="Name" id="Name"<br>';
+echo 'Name: <br>';
+echo '<input type="text" name="name" id="name"><br><br>';
 
-echo '<br>Commission: <br>';
-echo '<input type="percent" name="CommissionAmt" id="CommissionAmt"<br>';
+echo 'Address: <br>';
+echo '<input type="address" name="address" id="address"><br><br>';
 
-echo '<br>Address: <br>';
-echo '<input type="address" name="Address" id="Address"<br>';
+echo 'Commission: <br>';
+echo '<input type="percent" name="commissionPercent" id="commissionPercent"><br><br>';
 
-echo '<br>User Name: <br>';
-echo '<input type="text" name="User_Name" id="User_Name"<br>';
+echo 'User Name: <br>';
+echo '<input type="text" name="username" id="username"><br><br>';
 
-echo '<br>Password: <br>';
-echo '<input type="password" name="Password" id="Password"<br>';
+echo 'Password: <br>';
+echo '<input type="password" name="password" id="password"><br><br>';
 
-echo '<br><br><input type="submit" name="addAssociate" value="Add"><br>';
+echo '<input type="submit" name="addAssociate" value="Add"><br>';
 echo '</form>';
 
 if(isset($_POST['addAssociate']))
 {
-  $stmt = $conn->query("INSERT INTO Sales_Associate (Name, CommissionAmt, Address, User_Name, Password) VALUES('$_POST[Name]','$_POST[CommissionAmt]','$_POST[Address]','$_POST[User_Name]','$_POST[Password]')");
-        echo 'Associate has been entered!';
+	$stmt = $conn->query("INSERT INTO SalesAssociate (name, address, comm_per, username, password) VALUES('$_POST[name]','$_POST[address]','$_POST[commissionPercent]', '$_POST[username]','$_POST[password]')");
+    
+    echo 'Associate has been Added!';
 }
+
+db_close($conn);
 
 ?>

@@ -44,7 +44,7 @@ ul {text-align: center;}
         <button type="submit">Orders</button>
       </form></li>
       <li style="display:inline-block;">
-      <form method="get" action="http://students.cs.niu.edu/~z1624182/csci467/AdminHome.php">
+      <form method="get" action="AdminHome.php">
         <button type="submit">Admin Interface</button>
       </form></li>
       <li style="display:inline-block;">

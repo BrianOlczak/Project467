@@ -1,8 +1,11 @@
 <div class="header">
-            <h2>Manage Associates</h2>
-        </div>
+    <h2>Manage Associates</h2>
+</div>
 
- <?php include 'HomeButton2.html'; ?>
+<?php 
+   include 'HomeButton2.html';
+?>
+
   <!-- Menu toggle -->
     <a href="#menu" id="menuLink" class="menu-link">
         <!-- Hamburger icon -->

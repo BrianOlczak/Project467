@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Customer Quote</title>
-        <h1>Customer Quote</h1>
+        <title>Customer Quote</title>    
         <style>
-            div {       //TODO change this
+            div {       
+                <!-- TODO:; change this-->
                 border: 1px solid black;
                 width: 650px;
                 height: 650px;
@@ -12,11 +12,14 @@
             }
         </style>
     </head>
-     <form method="get" action="Welcome.php">
-        <button type="submit">Home</button>
    
     
     <body bgcolor="#f8f8ff">
+        <form method="get" action="Welcome.php">
+            <button type="submit">Home</button>
+        </form>
+
+        <h1>Customer Quote</h1>
         
         <?php
         //include 'Connections.php';
@@ -24,31 +27,26 @@
         include 'Session.php';
         //session_start();
         newQuote();
-        $order = array(
-            'customerID'    =>  $_POST['CustomerID'],
-            'item'          =>  $_POST['Item'],
-            'price'         =>  $_POST['OrderAmt'],
-            'discount'      =>  $_POST['Discount'],
-            'salesId'       =>  1,      // TODO: fetch this sales_associate id from session
-            'notes'         =>  $_POST['Secret_note']
-        );
-        createNewOrder($order);
+        if (isset($_POST['CustomerID'])) {
+            $order = array(
+                'customerID'    =>  $_POST['CustomerID'] ?? null,
+                'item'          =>  $_POST['Item'] ?? null,
+                'price'         =>  $_POST['OrderAmount'] ?? null,
+                'discount'      =>  $_POST['Discount'] ?? null,
+                'salesId'       =>  $_SESSION['user_id'] ?? null,
+                'notes'         =>  $_POST['SecretNote'] ?? null
+            );
+            createNewOrder($order);
+        }
 
-        function newQuote() {
-            if ($customerConnection = mysqli_connect('blitz.cs.niu.edu', 'student', 'student', 'csci467', '3306')) {
-                $customerSQL = "Select * from customers;";
-                $customerResult = mysqli_query($customerConnection, $customerSQL);
-
-                if (mysqli_connect_errno()) {
-                    echo "Connection Error: ".mysqli_error($customerConnection);
-                }
-                else {
-                    echo "<form method = 'post' action = 'CreateQuote.php'>";
+        $customerResult = newQuote();
+        
         ?>
 
-        </br>
-            Customer info
+        <form method = 'post' action = 'CreateQuote.php'>
+            
         <div>
+            Select Customer
             <table border = 1>
                 <th></th>
                 <th>ID</th>
@@ -64,12 +62,12 @@
                     for ($i = 0; $i < $rows; $i++){
                         $ar = mysqli_fetch_array($customerResult);
                         echo "<tr>";
-                            echo "<td><input type = 'radio' name = 'CustomerID' value = ", ($ar[0]), "</td>";
-                            echo "<td>",($ar[0]),"</td>";
-                            echo "<td>",($ar[1]),"</td>";
-                            echo "<td>",($ar[2]),"</td>";
-                            echo "<td>",($ar[3]),"</td>";
-                            echo "<td>",($ar[4]),"</td>";
+                            echo "<td><input type = 'radio' name = 'CustomerID' value = '" . $ar[0] . "'> </td>";
+                            echo "<td>" . ($ar[0]) . "</td>";
+                            echo "<td>" . ($ar[1]) . "</td>";
+                            echo "<td>" . ($ar[2]) . "</td>";
+                            echo "<td>" . ($ar[3]) . "</td>";
+                            echo "<td>" . ($ar[4]) . "</td>";
                         echo "</tr>";
                     }
                     echo "</tbody>";
@@ -77,37 +75,26 @@
 
             </table>
         </div>
+            <table>
+                <tr>
+                    <td>Items: </td>
+                    <td><input type = 'text' name = 'Item'></td>
+                </tr>
+                <tr>
+                    <td>Price: </td>
+                    <td><input type = 'text' name = 'OrderAmount'></td>
+                </tr>
+                <tr>
+                    <td>Discounts: </td>
+                    <td><input type = 'text' name = 'Discount'></td>
+                </tr>
+                <tr>
+                    <td>Note: </td>
+                    <td><input type = 'text' name = 'SecretNote'></td>
+                </tr>
+            </table>
 
-        <?php
-            echo "<table>";
-                echo "<tr>";
-                    echo "<td>Items: </td>";
-                    echo "<td><input type = 'text' name = 'Item'></td>";
-                echo "</tr>";
-                echo "<tr>";
-                    echo "<td>Note: </td>";
-                    echo "<td><input type = 'text' name = 'Secret_Note'></td>";
-                echo "</tr>";
-                echo "<tr>";
-                    echo "<td>Price: </td>";
-                    echo "<td><input type = 'text' name = 'OrderAmount'></td>";
-                echo "</tr>";
-                echo "<tr>";
-                    echo "<td>Discounts: </td>";
-                    echo "<td><input type = 'text' name = 'Discount'></td>";
-                echo "</tr>";
-            echo "</table>";
-
-            echo "<input type = 'submit' name = 'createNewSubmit' value = 'Submit'>";
-            echo "</form>";
-
-                }
-            }
-            elseif(mysqli_connect_errno()) {
-                echo "Connection error:". mysqli_connect_error();
-            }
-           mysqli_close($customerConnection);
-        }
-        ?>
+            <input type = 'submit' name = 'createNewSubmit' value = 'Submit'>
+        </form>
     </body>
 </html>

@@ -63,10 +63,13 @@
 
         </style>
     </head>
-     <form method="get" action="Welcome.php">
-        <button type="submit">Home</button>
+
     <body>
 
+        <form method="get" action="Welcome.php">
+            <button type="submit">Home</button>
+        </form>
+        
         <div class="header">
             <h1>Orders</h1>
         </div>
@@ -76,11 +79,9 @@
                 <style= "overflow: auto;">
                     table, th, td { border: 1px solid black;}
                 </style>
-                Quote Database
+                Quote Database:
                 <table>
-
                     <?php
-                        include 'Connections.php';
                         include 'Functions.php';
 
                         $salesId = 1;   // TODO: get this id from session

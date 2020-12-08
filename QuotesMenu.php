@@ -1,28 +1,29 @@
 <div class="header">
-            <h2>Manage Quotes</h2>
-        </div>
- <?php
+    <h2>Manage Quotes</h2>
+</div>
+
+<?php
 include 'HomeButton2.html';
 
-$host = "courses";
-$user = "z1808886";
-$password = "1995Sep20";
-$db = "z1808886";
+require 'Connections.php';
+//connect to the Database
+$conn = db_connect_hopper();
 
-$conn = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+$conn->set_charset("utf8");
 
 //Our select statement. This will retrieve the data that we want.
-$sql = "SELECT Status FROM PurchaseOrder";
+$sql = "SELECT order_id, is_approved, item FROM PurchaseOrder";
 
 echo '<form action="DeleteAssociate.php" method="post">';
 echo "<tr><th> Select Status of Quotes you wish to view </th></tr><br>";
 echo '<SELECT name="vis">';
+
 foreach($conn->query($sql) as $row)
 {
    echo '<option value ="';
-   echo $row ["Status"];
+   echo $row["order_id"];
    echo '">';
-   echo $row ["Status"];
+   echo $row["item"] . "(" . $row['is_approved'] . ")";
    echo '</option>';
 }
 
@@ -34,7 +35,8 @@ echo '</form>';
 if(isset($_POST['vis']))
 {
 
-        $vis = ($_POST['vis']); echo $vis;
+    $vis = ($_POST['vis']);
+
 	echo "<table style='border: solid 1px black;'>";
 	echo "<tr><th>Name</th><th>Commission</th><th>Address</th><th>UserName</th><th>Password</th></tr>";
 	class TableRows extends RecursiveIteratorIterator
@@ -67,7 +69,7 @@ if(isset($_POST['vis']))
 
 	try
 	{
-	$conn = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+	   $conn = new PDO("mysql:host=$host;dbname=$db", $user, $password);
     	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     	$stmt = $conn->prepare("SELECT FROM PurchaseOrder WHERE Status = '$vis'");
     	$stmt->execute();
