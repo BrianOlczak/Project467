@@ -7,11 +7,11 @@
 </html>
 
 <?php
-    include('Functions.php');
+    include('Connections.php');
     viewRecievedQuote();
 
     function viewRecievedQuote() {
-        $connection = dbConnect();
+        $connection = db_connect_hopper();
         echo "<table border = 1>";
         echo "Select a Quote to work with:";
         echo "<thead>";
