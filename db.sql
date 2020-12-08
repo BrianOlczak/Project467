@@ -27,4 +27,4 @@ CREATE TABLE PurchaseOrder (
 	primary key (order_id)
 );
 
-INSERT INTO `salesassociate`(`name`, `address`, `comm_per`, `username`, `password`) VALUES ("Joe", "221 ABC Avenue", 12.0, "joe", "password12");
+INSERT INTO `SalesAssociate`(`name`, `address`, `comm_per`, `username`, `password`) VALUES ("Joe", "221 ABC Avenue", 12.0, "joe", "password12");
