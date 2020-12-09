@@ -13,13 +13,10 @@
     <h3>Customer database</h3>
 
     <?php
-        require 'Connections.php';
-        //connect to the Database
-        $conn = db_connect_blitz();
+        require 'Functions.php';
         
-        $conn->set_charset("utf8");
-        $sql = 'SELECT * FROM customers';
-        $result = $conn->query($sql);
+        $result = getCustomerList();
+
         if ($result->num_rows > 0)
             {
             Print "<table border>";
@@ -38,8 +35,6 @@
         } else {
             Print "0 records found";
         }
-
-        db_close($conn);
     ?>
 
     </body>

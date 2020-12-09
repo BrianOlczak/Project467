@@ -1,7 +1,7 @@
 <?php
 
 function db_connect_hopper() {
-	$server = "hopper.cs.niu.edu";
+	$server = "courses";
 	$user = "z1808886";
 	$password = "1995Sep20";
 
@@ -11,9 +11,8 @@ function db_connect_hopper() {
 	// $password = "";
 
 	$database = "z1808886";
-	$port = "3306";
 
-	$db = mysqli_connect($server, $user, $password, $database, $port);
+	$db = new mysqli($server, $user, $password, $database);
 
 	if($db->connect_error)
 	{
@@ -30,12 +29,11 @@ function db_close($identifier) {
 
 function db_connect_blitz() {
 	$server = "blitz.cs.niu.edu";
-	$port = "3306";
 	$database = "csci467";
 	$user = "student";
 	$password = "student";
 
-	$db = mysqli_connect($server, $user, $password, $database, $port);
+	$db = new mysqli($server, $user, $password, $database);
 
 	if($db->connect_error)
 	{
@@ -44,9 +42,5 @@ function db_connect_blitz() {
 
     return $db;
 }
-
-// function db2_close($identifier) {
-//     return $db2->close();
-// }
 
 ?>

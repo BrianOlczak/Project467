@@ -44,6 +44,18 @@ include('Session.php');
 <!-- button lists -->
 <ul>
     <li style="display:inline-block;">
+        <form method="get" action="Customer_List.php">
+            <button type="submit">Customer List</button>
+        </form>
+    </li>
+
+    <li style="display:inline-block;">
+        <form method="get" action="Orders.php">
+            <button type="submit">Orders</button>
+        </form>
+    </li>
+
+    <li style="display:inline-block;">
         <form method="get" action="CreateQuote.php">
             <button type="submit">Create Quote</button>
         </form>
@@ -53,16 +65,7 @@ include('Session.php');
             <button type="submit">Warehouse</button>
         </form>
     </li>
-    <li style="display:inline-block;">
-        <form method="get" action="Customer_List.php">
-            <button type="submit">Customer List</button>
-        </form>
-    </li>
-    <li style="display:inline-block;">
-        <form method="get" action="Orders.php">
-            <button type="submit">Orders</button>
-        </form>
-    </li>
+    
     <li style="display:inline-block;">
         <form method="get" action="AdminHome.php">
             <button type="submit">Admin Interface</button>

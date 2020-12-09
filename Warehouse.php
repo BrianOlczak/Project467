@@ -1,68 +1,125 @@
 <html>
     <head>
-        <h1>New Quotes</h1>
+        <title>Quotes Warehouse</title>
     </head>
 
-    <body bgcolor="#f0f8ff"></body>
-</html>
+    <body bgcolor="#f0f8ff">
+        <form method="get" action="Welcome.php">
+            <button type="submit">Home</button>
+        </form>
+        <div class="header">
+            <h1></h1>
+        </div>
+    </body>
+
+<h2> Select the approved Quote you want to alert the Customer about</h2>
+
+<table border = 1>
+    <th></th>
+    <th>Quote ID</th>
+    <th>Custormer ID</th>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Discount</th>
+    <th>Commission Amt</th>
+    <th>Is Approved</th>
 
 <?php
-    include('Connections.php');
-    viewRecievedQuote();
+require 'Session.php';
+require 'Functions.php';
 
-    function viewRecievedQuote() {
-        $connection = db_connect_hopper();
-        echo "<table border = 1>";
-        echo "Select a Quote to work with:";
-        echo "<thead>";
-        echo "<th></th>";
-        echo "<th>ID</th>";
-        echo "<th>Items</th>";
-        echo "<th>Note</th>";
-        echo "<th>Price</th>";
-        echo "<th>Discounts</th>";
-        echo "<th>approved</th>";
-        echo "</thead>";
-        echo "<tbody>";
-        $sql = "Select * from PurchaseOrder;";
+//Our select statement. This will retrieve the data that we want.
+$salesId = $_SESSION['user_id'] ?? null;
 
-        if ($result = mysqli_query($connection, $sql)) {
-            $rowNum = mysqli_num_rows($result);
+$result = getOrders($salesId);
 
-            for ($i = 0; $i < $rowNum; $i++) {
-                $array = mysqli_fetch_array($result);
-                echo "<tr>";
-                echo "<td><input type = 'radio' name = 'select' value = ", ($array[0]),"></td>";
-                echo "<td>",($array[0]),"</td>";
-                echo "<td>",($array[1]),"</td>";
-                echo "<td>",($array[2]),"</td>";
-                echo "<td>",($array[3]),"</td>";
-                echo "<td>",($array[4]),"</td>";
-                if ($array[5] >= 1) {
-                    echo "<td>Yes</td>";
-                }
-                else {
-                    echo "<td>No</td>";
-                }
-                echo "</tr>";
-            }
-        }
-        else {
-            echo "Failed to execute: " . mysqli_error($connection);
-        }
-        echo "</tbody>";
-        echo "</table>";
-        echo "<table>";
+echo '<form action="Warehouse.php" method="post">';
+
+$rows = mysqli_num_rows($result);
+echo "<tbody>";
+
+for ($i = 0; $i < $rows; $i++){
+    $ar = mysqli_fetch_array($result);
+    if ($ar['is_approved']) {
         echo "<tr>";
-        echo "<td>";
-        echo "</td>";
-        echo "<td>";
-        echo "<button type = 'submit' name = 'EmailQuote' formaction = 'EmailQuote.php'>Email Quote</button>";
-        echo "</td>";
+            echo "<td><input type = 'radio' name = 'order_id' value = '" . $ar['order_id'] . "'> </td>";
+            echo "<td>" . ($ar['order_id']) . "</td>";
+            echo "<td>" . ($ar['customer_id']) . "</td>";
+            echo "<td>" . ($ar['item']) . "</td>";
+            echo "<td>" . ($ar['order_amt']) . "</td>";
+            echo "<td>" . ($ar['discount']) . "</td>";
+            echo "<td>" . ($ar['comm_amt']) . "</td>";
+            echo "<td>" . ($ar['is_approved']) . "</td>";
         echo "</tr>";
-        echo "</table>";
-        echo "</form>";
     }
+}
+
+echo "</tbody>";
+echo "</table>";
+
+echo '<br><br><input type="submit" name="submit" value="Alert">';
+echo '</form>';
+
+if(isset($_POST['order_id']))
+{
+    $orderId = ($_POST['order_id']);
+
+    $order = getOrder($orderId);
+
+    if (empty($order)) {
+        die('Error: Unable to fetch Order details');
+    }
+
+    $custormer = getCustomer($order['customer_id']);
+    if (empty($custormer)) {
+        die('Error: Unable to fetch Custormer details');
+    }
+
+    echo "<br/><br/>";
+
+    echo $custormer['name'] . " has been alerted for order approval.<br/>";
+    echo $custormer['contact'];
+
+    echo "<br><br>";
+
+    $url = 'http://blitz.cs.niu.edu/PurchaseOrder/';
+    $data = array(
+        'order' => $order['order_id'], 
+        'associate' => $order['sales_id'],
+        'custid' => $order['customer_id'], 
+        'amount' => $order['order_amt']);
+
+    $options = array(
+        'http' => array(
+            'header' => array('Content-type: application/json', 'Accept: application/json'),
+            'method'  => 'POST',
+            'content' => json_encode($data)
+        )
+    );
+
+    $context = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    if ($result === FALSE) {
+        echo "Unable to post order alert to blitz server.";
+        die();
+    }
+
+    $result = json_decode($result);
+
+    echo "<h4> API Response </h4>";
+    if (isset($result->errors)) {
+        foreach ($result->errors as $value) {
+            echo $value . "<br>";
+        }
+    } else {
+        foreach ($result as $key => $value) {
+            echo $key . "\t:\t" . $value . "<br>";
+        }
+    }
+}
+
 ?>
 
-
+</body>
+</html>

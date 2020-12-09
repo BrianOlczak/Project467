@@ -1,4 +1,5 @@
 <?php
+//do not change this
 	$servername = 'courses';
 	$username='z1808886';
 	$password='1995Sep20';

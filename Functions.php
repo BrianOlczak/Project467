@@ -2,7 +2,7 @@
 
     include 'Connections.php';
 
-    function newQuote() {
+    function getCustomerList() {
         if (!$db = db_connect_blitz()) {
             echo "Connection Error: " .mysqli_error($db);
             return null;
@@ -11,7 +11,25 @@
         $customerSQL = "Select * from customers;";
         $customerResult = mysqli_query($db, $customerSQL);
 
+        db_close($db);
         return $customerResult;
+    }
+
+    function getCustomer($id)
+    {
+        if (!$db = db_connect_blitz()) {
+            echo "Connection Error: " .mysqli_error($db);
+            return null;
+        }
+            
+        $customerSQL = "Select * from customers where id = " . $id;
+        $result = mysqli_query($db, $customerSQL);
+
+        db_close($db);
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        return null;
     }
 
     function createNewOrder($orderArr) {
@@ -49,7 +67,7 @@
             echo "Error:".mysqli_error($db);
         }
 
-        mysqli_close($db);
+        db_close($db);
     }
 
     function getOrders($salesId) {
@@ -58,29 +76,47 @@
             return null;
         }
 
-        $query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId;        
+        $query = "SELECT * FROM PurchaseOrder where sales_id = " . $salesId; 
 
-        $result = $db->query($query);
-        if (mysqli_num_rows($result) > 0)
-            {
-            Print "<table border>";
-            Print "<tr>";
-            Print "<th>ID</th><th>CustomerID</th><th>Item</th><th>Order Amount</th><th>Commision Amount</th><th>Approved</th><th>Note</th>";
-            Print "<tr>";
-            while($row = $result->fetch_assoc()) {
-                Print "<tr>";
-                Print "<td>".$row['order_id'] . "</td> ";
-                Print "<td>".$row['customer_id'] . " </td>";
-                Print "<td>".$row['item'] . " </td>";
-                Print "<td>".$row['order_amt'] . " </td>";
-                Print "<td>".$row['comm_amt'] . " </td>";
-                Print "<td>".$row['is_approved'] . " </td>";
-                Print "<td>".$row['secret_note'] . " </td></tr>";
-            }
-            Print "</table>";
-        } else {
-            echo "\n0 records found";
+        $result = mysqli_query($db, $query);
+
+        db_close($db);
+        return $result;
+    }
+
+    function getOrder($orderId)
+    {
+        if (!$db = db_connect_hopper()) {
+            echo "Connection Error: " .mysqli_error($db);
+            return null;
         }
+            
+        $query = "SELECT * FROM PurchaseOrder where order_id = " . $orderId;
+        
+        $result = mysqli_query($db, $query);
+
+        db_close($db);
+
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        return null;
+    }
+
+    function approve_order($orderId)
+    {
+        if (!$db = db_connect_hopper()) {
+            echo "Error: Unable to connect to the database.";
+            return false;
+        }
+
+        $query = "UPDATE PurchaseOrder set is_approved = 1 where order_id = " . $orderId;
+
+        $result = mysqli_query($db, $query);
+
+        db_close($db);
+
+        return true;
     }
 
 ?>

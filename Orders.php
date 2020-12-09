@@ -85,7 +85,29 @@
                         include 'Functions.php';
 
                         $salesId = 1;   // TODO: get this id from session
-                        getOrders($salesId);
+                        $result = getOrders($salesId);
+
+                        if (mysqli_num_rows($result) > 0)
+                        {
+                            Print "<table border>";
+                            Print "<tr>";
+                            Print "<th>ID</th><th>CustomerID</th><th>Item</th><th>Order Amount</th><th>Commision Amount</th><th>Approved</th><th>Note</th><th></th>";
+                            Print "</tr>";
+                            while($row = $result->fetch_assoc()) {
+                                Print "<tr>";
+                                Print "<td>".$row['order_id'] . "</td> ";
+                                Print "<td>".$row['customer_id'] . " </td>";
+                                Print "<td>".$row['item'] . " </td>";
+                                Print "<td>".$row['order_amt'] . " </td>";
+                                Print "<td>".$row['comm_amt'] . " </td>";
+                                Print "<td>".$row['is_approved'] . " </td>";
+                                Print "<td>".$row['secret_note'] . " </td>";
+                                Print "<td><a href='update-order.php?id=" . $row["order_id"] . "'>Update</a></td></tr>";
+                            }
+                            Print "</table>";
+                        } else {
+                            echo "\n0 records found";
+                        }
                     ?>
 
                 </table>

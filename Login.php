@@ -1,31 +1,33 @@
 <?php
-   //connecting to db
-   include('Connections.php');
-   
-   session_start();
-   // $error = 'all set';
-   $db = db_connect_hopper();
-   if(isset($_POST["username"], $_POST["password"])){
-      $username = $_POST["username"];
-      $password = $_POST["password"];
+//connecting to db
+//finished
+include('Connections.php');
 
-      $sql = "SELECT sales_id, username FROM SalesAssociate WHERE username = '$username' AND  password = '$password'";
-      $result = mysqli_query($db, $sql);
-      $rows = mysqli_num_rows($result);
-      if($rows > 0)
-      {
-         $user = mysqli_fetch_array($result);
-         $_SESSION["login_user"] = true;
-         $_SESSION["usename"] = $username;
-         $_SESSION["user_id"] = $user['sales_id'];
-         header("location: Welcome.php");
-      }
-      else
-      {
-         echo 'The username or password are incorrect!';
-      }
+$db = db_connect_hopper();
+session_start();
+
+if(isset($_POST["username"], $_POST["password"]))
+{
+
+   $username = $_POST["username"];
+   $password = $_POST["password"];
+
+   $sql = "SELECT sales_id, username FROM SalesAssociate WHERE username = '$username' AND  password = '$password'";
+   $result = mysqli_query($db, $sql);
+   $rows = mysqli_num_rows($result);
+   if($rows > 0)
+   {
+      $row = $result->fetch_assoc();
+      $_SESSION["login_user"] = true;
+      $_SESSION["username"] = $row['username'];
+      $_SESSION["user_id"] = $row['sales_id'];
+      header("location: Welcome.php");
    }
-   db_close($db);
+   else
+   {
+      echo 'The username or password are incorrect!';
+   }
+}
 ?>
 <html>
 
@@ -39,7 +41,7 @@
          }
          label {
             font-weight:bold;
-            width:15%;
+            width:10%;
             font-size:14px;
          }
          .box {
@@ -58,12 +60,12 @@
             <div style = "margin:3%">
 
                <form action = "" method = "post">
-                  <label>Username : </label><input type = "text" name = "username" class = "box"/><br /><br />
-                  <label>Password : </label><input type = "Password" name = "password" class = "box" /><br/><br />
+                  <label>Username  : </label><input type = "text" name = "username" class = "box"/><br /><br />
+                  <label>Password  : </label><input type = "Password" name = "password" class = "box" /><br/><br />
                   <input type = "submit" value = " Submit "/><br />
                </form>
 
-               <div style = "font-size:11px; color:#cc0000; margin-top:1%"><?php if(isset($error)) echo $error; ?></div>
+               <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php if(isset($error)) echo $error; ?></div>
 
             </div>
 

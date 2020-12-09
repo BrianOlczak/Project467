@@ -26,7 +26,8 @@
         include 'Functions.php';
         include 'Session.php';
         //session_start();
-        newQuote();
+        $customerResult = getCustomerList();
+        
         if (isset($_POST['CustomerID'])) {
             $order = array(
                 'customerID'    =>  $_POST['CustomerID'] ?? null,
@@ -38,8 +39,6 @@
             );
             createNewOrder($order);
         }
-
-        $customerResult = newQuote();
         
         ?>
 

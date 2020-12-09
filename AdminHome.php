@@ -11,7 +11,7 @@
         <div class="pure-menu">
             <ul class="pure-menu-list">
 		<li class="pure-menu-item"><a href="AssociateMenu.php" class="pure-menu-link">Manage Associates</a></li>
-                <li class="pure-menu-item"><a href="QuotesMenu.php" class="pure-menu-link">Manage Quotes</a></li>
+                <li class="pure-menu-item"><a href="ManageQuotes.php" class="pure-menu-link">Manage Quotes</a></li>
                 <li class="pure-menu-item"><a href="Welcome.php" class="pure-menu-link">Welcome</a></li>
             </ul>
         </div>
